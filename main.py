@@ -1,11 +1,32 @@
 from json import JSONEncoder
 
+from confluent_kafka import Producer
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
 import time
 import json
+import confluent_kafka
 
 global db, previous_db, client
+
+bootstrap_servers = 'localhost:9092'
+topic = 'default_toic'
+
+def sendMessage(filename, server, topic):
+    global db
+
+    export_db_to_json(db,"db.json")
+
+    producer = Producer({'bootstrap.servers': server})
+
+    with open(filename, "r") as json_file:
+        message = json_file.readlines()
+
+    json_message = json.dumps(message)
+
+    producer.produce(topic, json_message)
+
+    producer.flush()
 
 
 def getDb():
@@ -96,6 +117,7 @@ def compareDB():
 while 1:
     if compareDB() != 1:
         print("Database Changed")
+        sendMessage("db.json", bootstrap_servers, topic)
     else:
         print("No changes")
     previous("db.json")
