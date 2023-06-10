@@ -9,13 +9,19 @@ import confluent_kafka
 
 global db, previous_db, client
 
-bootstrap_servers = 'localhost:9092'
-topic = 'default_toic'
+bootstrap_servers = ""
+
+while bootstrap_servers == "":
+    bootstrap_servers = input("Enter bootstrap servers (eg. localhost:9092)")
+
+topic = ""
+while topic == "":
+    topic = input("Enter Topic (eg. my_topic)")
 
 def sendMessage(filename, server, topic):
     global db
 
-    export_db_to_json(db,"db.json")
+    export_db_to_json(db, "db.json")
 
     producer = Producer({'bootstrap.servers': server})
 
