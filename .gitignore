@@ -160,6 +160,6 @@ cython_debug/
 .idea/
 
 #Kafka And Zookeeper
-apache-zookeeper-3.8.1-bin\
-kafka_2.12-3.4.0\
-UsersasdPycharmProjectsOSAapache-zookeeper-3.8.1-bindata\
+apache-zookeeper-3.8.1-bin/
+kafka_2.12-3.4.0/
+UsersasdPycharmProjectsOSAapache-zookeeper-3.8.1-bindata/
