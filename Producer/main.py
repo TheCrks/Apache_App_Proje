@@ -1,16 +1,13 @@
-from json import JSONEncoder
-
 from confluent_kafka import Producer
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
 import time
 import json
-import confluent_kafka
 
 global db, previous_db, client
 
+# Apache Kafka Setup
 bootstrap_servers = ""
-
 while bootstrap_servers == "":
     bootstrap_servers = input("Enter bootstrap servers (eg. localhost:9092)")
 
@@ -18,6 +15,8 @@ topic = ""
 while topic == "":
     topic = input("Enter Topic (eg. my_topic)")
 
+
+# Method to send messages
 def sendMessage(filename, server, topic):
     global db
 
@@ -35,6 +34,7 @@ def sendMessage(filename, server, topic):
     producer.flush()
 
 
+# Method to receive database
 def getDb():
     global db, previous_db, client
     uri = "mongodb+srv://uuzun:EwuvFhEZNKySGgBE@cluster0.khd9rlb.mongodb.net/?retryWrites=true&w=majority"
@@ -50,10 +50,11 @@ def getDb():
 
 
 getDb()
-previous_db =[]
+previous_db = []
 previous_collections = ""
 
 
+# Method to assign previous_db
 def previous(filename):
     global db, previous_db, previous_collections
     export_db_to_json(db, "db.json")
@@ -63,6 +64,7 @@ def previous(filename):
     previous_db = [line.strip() for line in previous_db]
 
 
+# Method to export database to a json file
 def export_db_to_json(db, filename):
     open(filename, "w")
     # Fetch all documents from the specified collection
@@ -80,10 +82,12 @@ def export_db_to_json(db, filename):
                 serialized_document = str(y)
                 json_file.write(serialized_document + "\n")
 
+
 export_db_to_json(db, "db.json")
 previous("db.json")
 
 
+# Method to compare current and previous databases
 def compareDB():
     global previous_db, db, previous_collections
     string = []
@@ -91,6 +95,7 @@ def compareDB():
     collections = db.list_collection_names()
     j = 0
     for x in collections:
+        # if previous_collections gets out of bound there is most likely a new collection
         try:
             if x != previous_collections[j]:
                 result += 1
@@ -101,13 +106,13 @@ def compareDB():
         j += 1
         collection = db[x]
         document = collection.find()
-        i = 0
         for y in document:
             string.append(str(y))
 
     i = 0
 
     for s in string:
+        # if previous_db gets out of bound there is most likely a new document
         try:
             if s != previous_db[i]:
                 print(s + " != " + previous_db[i])
@@ -120,7 +125,9 @@ def compareDB():
     return result
 
 
+# Check if database is changed every 10 seconds
 while 1:
+    # If database is changed send message to kafka topic
     if compareDB() != 1:
         print("Database Changed")
         sendMessage("db.json", bootstrap_servers, topic)
