@@ -7,13 +7,9 @@ import json
 global db, previous_db, client
 
 # Apache Kafka Setup
-bootstrap_servers = ""
-while bootstrap_servers == "":
-    bootstrap_servers = input("Enter bootstrap servers (eg. localhost:9092)")
+bootstrap_servers = "localhost:9092"
 
-topic = ""
-while topic == "":
-    topic = input("Enter Topic (eg. my_topic)")
+topic = "default_toic"
 
 
 # Method to send messages
