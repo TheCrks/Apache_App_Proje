@@ -49,4 +49,3 @@ git clone https://github.com/TheCrks/Apache_App_Proje.git
 ## Additional Information
 - Ensure that you have the necessary permissions and dependencies installed for running Apache, MongoDB, and the Python application.
 - Customize the MongoDB connection settings in the producer and consumer scripts if your MongoDB instance is running on a different host or port.
-- Feel free to modify the README.md file as needed to provide additional information or clarify any specific instructions related to your project.
