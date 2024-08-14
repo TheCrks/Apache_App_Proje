@@ -29,7 +29,7 @@ Project maintainers are responsible for clarifying and enforcing our code of con
 
 ## Reporting
 
-If you encounter or witness any behavior that violates the code of conduct, please report it by contacting the project team at [INSERT CONTACT EMAIL]. All reports will be reviewed and investigated promptly and confidentially. We are committed to maintaining the privacy and anonymity of the reporter.
+If you encounter or witness any behavior that violates the code of conduct, please report it by contacting the project team at anadoluyuz_46@hotmail.com. All reports will be reviewed and investigated promptly and confidentially. We are committed to maintaining the privacy and anonymity of the reporter.
 
 ## Enforcement
 
